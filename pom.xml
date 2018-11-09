@@ -67,7 +67,22 @@
 
 
   </dependencies>
+  <!--配置源代码编码格式为UTF-8-->
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
   <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
+    </plugins>
+
     <finalName>rui</finalName>
   </build>
 </project>
