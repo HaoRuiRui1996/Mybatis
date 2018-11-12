@@ -13,6 +13,16 @@ public class SysRole {
 
     private Date createTime;
 
+    private SysUser user;
+
+    public SysUser getUser() {
+        return user;
+    }
+
+    public void setUser(SysUser user) {
+        this.user = user;
+    }
+
     public Long getId() {
         return id;
     }
@@ -61,6 +71,7 @@ public class SysRole {
                 ", enabled=" + enabled +
                 ", createBy=" + createBy +
                 ", createTime=" + createTime +
+                ", user=" + user +
                 '}';
     }
 }
