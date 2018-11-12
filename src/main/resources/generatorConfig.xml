@@ -47,6 +47,12 @@
             <property name="enableSubPackages" value="false" />
         </javaClientGenerator>
         <!-- 指定数据库表 -->
+        <!-- <table schema="" tableName="user"></table>-->
+        <table schema="" tableName="sys_user"></table>
+        <table schema="" tableName="sys_role"></table>
+        <table schema="" tableName="sys_privilege"></table>
+        <table schema="" tableName="sys_user_role"></table>
+        <table schema="" tableName="sys_role_privilege"></table>
         <table schema="" tableName="user"></table>
     </context>
 </generatorConfiguration>

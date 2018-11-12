@@ -9,6 +9,7 @@
     </properties>
     <settings>
         <setting name="logImpl" value="LOG4J" />
+        <setting name="mapUnderscoreToCamelCase" value="true"></setting>
     </settings>
     <typeAliases>
         <package name="com.rui.model.pojo"/>
@@ -29,5 +30,10 @@
 
     <mappers>
         <mapper resource="com/rui/model/mapper/UserMapper.xml"></mapper>
+        <mapper resource="com/rui/model/mapper/SysPrivilegeMapper.xml"></mapper>
+        <mapper resource="com/rui/model/mapper/SysRolePrivilegeMapper.xml"></mapper>
+        <mapper resource="com/rui/model/mapper/SysUserMapper.xml"></mapper>
+        <mapper resource="com/rui/model/mapper/SysRoleMapper.xml"></mapper>
+        <mapper resource="com/rui/model/mapper/SysUserRoleMapper.xml"></mapper>
     </mappers>
 </configuration>
