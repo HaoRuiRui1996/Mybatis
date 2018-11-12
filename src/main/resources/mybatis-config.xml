@@ -4,11 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+    <properties>
+        <property name="dialect" value="mysql" />
+    </properties>
     <settings>
-        <setting name="LogImpI" value="LOG4J"/>
+        <setting name="logImpl" value="LOG4J" />
     </settings>
     <typeAliases>
-        <package name="com.rui.model"/>
+        <package name="com.rui.model.pojo"/>
     </typeAliases>
     <environments default="development">
         <environment id="development">
@@ -23,8 +26,8 @@
             </dataSource>
         </environment>
     </environments>
-    <mappers>
-        <mapper resource=""></mapper>
-    </mappers>
 
+    <mappers>
+        <mapper resource="com/rui/model/mapper/UserMapper.xml"></mapper>
+    </mappers>
 </configuration>
