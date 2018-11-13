@@ -1,5 +1,6 @@
 package com.rui.test;
 
+import com.rui.model.mapper.SysRoleMapper;
 import com.rui.model.mapper.SysUserMapper;
 import com.rui.model.mapper.UserMapper;
 import com.rui.model.pojo.SysRole;
@@ -169,6 +170,21 @@ public class SysUserTest extends BaseMapperTest {
         } finally {
             sqlSession.rollback();
             sqlSession.close();
+        }
+    }
+
+    @Test
+    public  void selectRolesByUser() {
+        List<SysRole> sysRoles;
+        SqlSession sqlSession = getSqlSession();
+        try {
+            SysUserMapper sysRoleMapper = sqlSession.getMapper(SysUserMapper.class);
+            sysRoles = sysRoleMapper.selectRolesByUser(1L, 1);
+        } finally {
+            sqlSession.close();
+        }
+        for (SysRole role : sysRoles) {
+            System.out.println(role);
         }
     }
 

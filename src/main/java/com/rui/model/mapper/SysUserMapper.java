@@ -2,6 +2,7 @@ package com.rui.model.mapper;
 
 import com.rui.model.pojo.SysRole;
 import com.rui.model.pojo.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface SysUserMapper {
     int updateById(SysUser user);
 
     int deleteById(Long id);
+
+    List<SysRole> selectRolesByUser(@Param("userId") Long userId, @Param("enabled") Integer enabled);
 }
