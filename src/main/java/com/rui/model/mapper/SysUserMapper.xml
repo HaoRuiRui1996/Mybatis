@@ -96,4 +96,20 @@
         where u.id = #{userId}
           and r.enabled = #{enabled}
   </select>
+
+  <select id="selectRolesByUserAndRole" resultType="com.rui.model.pojo.SysRole">
+    select
+        r.id,
+        r.role_name,
+        r.enabled,
+        r.create_by,
+        r.create_time,
+        u.user_name as "user.userName",
+        u.user_password as "user.userPassword"
+      from sys_user u
+        inner join sys_user_role ur on ur.user_id = u.id
+        inner join sys_role r on ur.role_id = r.id
+        where u.id = #{user.id}
+          and r.enabled = #{role.enabled}
+  </select>
 </mapper>
