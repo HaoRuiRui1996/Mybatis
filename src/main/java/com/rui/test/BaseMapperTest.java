@@ -24,6 +24,7 @@ public class BaseMapperTest {
     }
 
     public SqlSession getSqlSession() {
+        //没有设置自动提交
         return sqlSessionFactory.openSession();
     }
 }

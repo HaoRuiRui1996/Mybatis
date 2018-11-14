@@ -1,30 +1,44 @@
 package com.rui.model.mapper;
 
 import com.rui.model.pojo.SysRole;
-import com.rui.model.pojo.SysRoleExample;
+import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.type.JdbcType;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
 public interface SysRoleMapper {
-    int countByExample(SysRoleExample example);
 
-    int deleteByExample(SysRoleExample example);
+    @Results(id = "roleResultMap",
+            value = {
+                    @Result(column = "id", property = "id", id = true),
+                    @Result(column = "role_name", property = "roleName", jdbcType = JdbcType.VARCHAR),
+                    @Result(column = "enabled", property = "enabled", jdbcType = JdbcType.INTEGER),
+                    @Result(column = "create_by", property = "createBy", jdbcType = JdbcType.BIGINT),
+                    @Result(column = "create_time", property = "createTime", jdbcType = JdbcType.TIMESTAMP),
+            })
+    @Select("select id, role_name, enabled, create_by, create_time from sys_role where id = #{id}")
+    SysRole selectById(Long id);
 
-    int deleteByPrimaryKey(Long id);
+    @ResultMap("roleResultMap")
+    @Select("select id, role_name, enabled, create_by, create_time from sys_role")
+    List<SysRole> selectAll();
 
-    int insert(SysRole record);
+    @Insert("insert into sys_role(id, role_name, enabled, create_by, create_time) values(#{id}, #{roleName}, #{enabled}, #{createBy}, #{createTime, jdbcType=TIMESTAMP})")
+    int insert(SysRole role);
 
-    int insertSelective(SysRole record);
+    @Insert("insert into sys_role(role_name, enabled, create_by, create_time) values(#{roleName}, #{enabled}, #{createBy}, #{createTime, jdbcType=TIMESTAMP})")
+    @Options(useGeneratedKeys = true, keyProperty = "id")
+    //返回自增主键
+    int insert1(SysRole role);
 
-    List<SysRole> selectByExample(SysRoleExample example);
+    @Insert("insert into sys_role(role_name, enabled, create_by, create_time) values(#{roleName}, #{enabled}, #{createBy}, #{createTime, jdbcType=TIMESTAMP})")
+    @SelectKey(statement = "SELECT LAST_INSERT_ID()", keyColumn = "id", keyProperty = "id", before = false, resultType = Long.class)
+    //返回非自增主键
+    int insert2(SysRole role);
 
-    SysRole selectByPrimaryKey(Long id);
+    @Update("update sys_role set role_name = #{roleName}, enabled = #{enabled}, create_by = #{createBy}, create_time = #{createTime} where id = #{id}")
+    int update(SysRole role);
 
-    int updateByExampleSelective(@Param("record") SysRole record, @Param("example") SysRoleExample example);
-
-    int updateByExample(@Param("record") SysRole record, @Param("example") SysRoleExample example);
-
-    int updateByPrimaryKeySelective(SysRole record);
-
-    int updateByPrimaryKey(SysRole record);
+    @Delete("delete from sys_role where id = #{id}")
+    int delete(SysRole role);
 }
