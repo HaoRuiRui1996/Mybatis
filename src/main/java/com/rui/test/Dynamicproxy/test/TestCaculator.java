@@ -14,7 +14,7 @@ public class TestCaculator {
                 SimpleCalculator.class.getInterfaces(), handler);
         calculator.sub(1, 2);
         byte[] classFile = ProxyGenerator.generateProxyClass("$Proxy0", SimpleCalculator.class.getInterfaces());
-        String path = "Q:/test/Calculator.class";
+        String path = "E:/test/Calculator.class";
         try(FileOutputStream fos = new FileOutputStream(path)) {
             fos.write(classFile);
             fos.flush();

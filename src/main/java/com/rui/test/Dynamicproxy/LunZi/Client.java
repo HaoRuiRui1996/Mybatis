@@ -1,4 +1,4 @@
-package com.rui.test.Dynamicproxy;
+package com.rui.test.Dynamicproxy.LunZi;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;

@@ -1,4 +1,4 @@
-package com.rui.test.Dynamicproxy;
+package com.rui.test.Dynamicproxy.LunZi;
 
 public class RealSubject implements Subject {
     @Override
