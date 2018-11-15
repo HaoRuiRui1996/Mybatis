@@ -14,6 +14,10 @@ public interface SysUserMapper {
 
     List<SysRole> selectRolesByUserId(Long id);
 
+    List<SysUser> selectByUser(SysUser user);
+
+    List<SysUser> selectByUserIdOrName(SysUser user);
+
     int insert(SysUser user);
 
     //使用jdbc方式返回主键自增值
@@ -23,6 +27,8 @@ public interface SysUserMapper {
     int insert3(SysUser user);
 
     int updateById(SysUser user);
+
+    int updateByIdSelective(SysUser user);
 
     int deleteById(Long id);
 

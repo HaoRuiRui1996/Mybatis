@@ -66,6 +66,45 @@ public class SysUserTest extends BaseMapperTest {
     }
 
     @Test
+    public void selectByUser() {
+        List<SysUser> users;
+        SqlSession sqlSession = getSqlSession();
+        try {
+            //获取UserMapper接口
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            SysUser user = new SysUser();
+            //user.setUserEmail("test@qq.com");
+            users = sysUserMapper.selectByUser(user);
+        } finally {
+            sqlSession.close();
+        }
+        for (SysUser sysUser :
+                users) {
+            logger.info(sysUser);
+        }
+    }
+
+    @Test
+    public void selectByUserIdOrName() {
+        List<SysUser> users;
+        SqlSession sqlSession = getSqlSession();
+        try {
+            //获取UserMapper接口
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            SysUser user = new SysUser();
+            user.setUserName("test");
+            //user.setUserEmail("test@qq.com");
+            users = sysUserMapper.selectByUserIdOrName(user);
+        } finally {
+            sqlSession.close();
+        }
+        for (SysUser sysUser :
+                users) {
+            logger.info(sysUser);
+        }
+    }
+
+    @Test
     public void insert(){
         SysUser user = new SysUser();
         user.setUserName("哇哈哈");
@@ -149,6 +188,25 @@ public class SysUserTest extends BaseMapperTest {
             int result = sysUserMapper.updateById(user);
             Assert.assertEquals(1, result);
             user = sysUserMapper.selectById(2L);
+            logger.info("修改后：" + user);
+        } finally {
+            sqlSession.rollback();
+            sqlSession.close();
+        }
+
+    }
+
+    @Test
+    public void updateByIdSelective() {
+        SqlSession sqlSession = getSqlSession();
+        try {
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            SysUser user = new SysUser();
+            user.setId(1L);
+            user.setUserPassword("22222");
+            logger.info("修改前" + user);
+            int result = sysUserMapper.updateByIdSelective(user);
+            Assert.assertEquals(1, result);
             logger.info("修改后：" + user);
         } finally {
             sqlSession.rollback();
