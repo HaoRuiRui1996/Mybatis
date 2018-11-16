@@ -43,13 +43,15 @@
         head_img,
         create_time
         from sys_user
-        where 1 = 1
-        <if test="userName != null and userName != ''">
-            and user_name like concat('%', #{userName}, '%')
-        </if>
-        <if test="userEmail != null and userEmail != ''">
-            and user_email = #{userEmail}
-        </if>
+        <where>
+            <if test="userName != null and userName != ''">
+                and user_name like concat('%', #{userName}, '%')
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                and user_email = #{userEmail}
+            </if>
+        </where>
+
     </select>
 
     <select id="selectByUserIdOrName" resultType="com.rui.model.pojo.SysUser">
@@ -107,6 +109,20 @@
         </selectKey>
     </insert>
 
+    <insert id="insertUsers" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_user (
+          user_name, user_password, user_email, user_info,
+          head_img, create_time)
+        values
+          <foreach collection="list" separator="," item="user" >
+              (
+              #{user.userName}, #{user.userPassword}, #{user.userEmail},
+              #{user.userInfo}, #{user.headImg, jdbcType=BLOB},
+              #{user.createTime, jdbcType=TIMESTAMP}
+              )
+          </foreach>
+    </insert>
+
     <update id="updateById">
     update sys_user
     set user_name = #{userName},
@@ -117,6 +133,15 @@
         create_time = #{createTime, jdbcType=TIMESTAMP}
     where id = #{id}
   </update>
+
+    <update id="updateByMap">
+        update sys_user
+        set
+        <foreach collection="map" index="key" item="val" separator=",">
+            ${key} = #{val}
+        </foreach>
+        where id = #{id}
+      </update>
 
     <delete id="deleteById">
     delete from sys_user where id = #{id}
@@ -157,26 +182,43 @@
 
   <update id="updateByIdSelective">
       update sys_user
-      set
-        <if test="userName != null and userName != ''">
-            user_name = #{userName},
-        </if>
-        <if test="userPassword != null and userPassword != ''">
-            user_password = #{userPassword},
-        </if>
-        <if test="userEmail != null and userEmail != ''">
-            user_email = #{userEmail},
-        </if>
-        <if test="userInfo != null and userInfo != ''">
-            user_info = #{userInfo},
-        </if>
-        <if test="headImg != null">
-            head_img = #{headImg, jdbcType=BLOB},
-        </if>
-        <if test="createTime != null">
-            create_time = #{createTime, jdbcType=TIMESTAMP}，
-        </if>
-        id = #{id}
+      <set>
+          <if test="userName != null and userName != ''">
+              user_name = #{userName},
+          </if>
+          <if test="userPassword != null and userPassword != ''">
+              user_password = #{userPassword},
+          </if>
+          <if test="userEmail != null and userEmail != ''">
+              user_email = #{userEmail},
+          </if>
+          <if test="userInfo != null and userInfo != ''">
+              user_info = #{userInfo},
+          </if>
+          <if test="headImg != null">
+              head_img = #{headImg, jdbcType=BLOB},
+          </if>
+          <if test="createTime != null">
+              create_time = #{createTime, jdbcType=TIMESTAMP}，
+          </if>
+          id = #{id}
+      </set>
     where id = #{id}
   </update>
+
+    <select id="selectByUserIds" resultType="com.rui.model.pojo.SysUser">
+        select id,
+        user_name,
+        user_password,
+        user_email,
+        user_info,
+        head_img,
+        create_time
+        from sys_user
+        where id in
+            <foreach collection="ids" open="(" close=")" index="i" item="id" separator=",">
+                #{id}
+            </foreach>
+    </select>
+
 </mapper>

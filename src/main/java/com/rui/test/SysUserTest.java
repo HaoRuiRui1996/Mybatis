@@ -11,9 +11,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class SysUserTest extends BaseMapperTest {
 
@@ -105,6 +103,26 @@ public class SysUserTest extends BaseMapperTest {
     }
 
     @Test
+    public void selectByUserIds() {
+        List<SysUser> users;
+        SqlSession sqlSession = getSqlSession();
+        try {
+            //获取UserMapper接口
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            List<Long> ids = new ArrayList<>();
+            ids.add(1L);
+            ids.add(2L);
+            users = sysUserMapper.selectByUserIds(ids);
+        } finally {
+            sqlSession.close();
+        }
+        for (SysUser sysUser :
+                users) {
+            logger.info(sysUser);
+        }
+    }
+
+    @Test
     public void insert(){
         SysUser user = new SysUser();
         user.setUserName("哇哈哈");
@@ -178,6 +196,43 @@ public class SysUserTest extends BaseMapperTest {
     }
 
     @Test
+    public void insertUsers() {
+        SysUser userA = new SysUser();
+        userA.setUserName("哇哈哈");
+        userA.setUserPassword("123456");
+        userA.setCreateTime(new Date());
+        userA.setUserEmail("123@qq.com");
+        userA.setHeadImg(new byte[]{1,2,3,});
+        userA.setUserInfo("test insert");
+        System.out.println(userA);
+        SysUser userB = new SysUser();
+        userB.setUserName("哇哈哈");
+        userB.setUserPassword("123456");
+        userB.setCreateTime(new Date());
+        userB.setUserEmail("123@qq.com");
+        userB.setHeadImg(new byte[]{1,2,3,});
+        userB.setUserInfo("test insert");
+        System.out.println(userB);
+        SqlSession sqlSession = getSqlSession();
+        try {
+            SysUserMapper userMapper = sqlSession.getMapper(SysUserMapper.class);
+            List<SysUser> users = new ArrayList<>();
+            users.add(userA);
+            users.add(userB);
+            int result = userMapper.insertUsers(users);
+            Assert.assertEquals(2, result);
+            for (SysUser user : users) {
+                System.out.println(user);
+            }
+            //默认的sqlSession是不自动提交的
+            //sqlSession.commit();
+        } finally {
+            sqlSession.rollback();
+            sqlSession.close();
+        }
+    }
+
+    @Test
     public void updateById() {
         SqlSession sqlSession = getSqlSession();
         try {
@@ -195,6 +250,26 @@ public class SysUserTest extends BaseMapperTest {
         }
 
     }
+
+    @Test
+    public void updateByMap() {
+        SqlSession sqlSession = getSqlSession();
+        try {
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("user_password", "222222");
+
+            int result = sysUserMapper.updateByMap(map, 1L);
+            Assert.assertEquals(1, result);
+            SysUser user = sysUserMapper.selectById(1L);
+            logger.info("修改后：" + user);
+        } finally {
+            sqlSession.rollback();
+            sqlSession.close();
+        }
+
+    }
+
 
     @Test
     public void updateByIdSelective() {

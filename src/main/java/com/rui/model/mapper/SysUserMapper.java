@@ -5,10 +5,14 @@ import com.rui.model.pojo.SysUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SysUserMapper {
 
     SysUser selectById(Long id);
+
+    //foreach查找
+    List<SysUser> selectByUserIds(List<Long> ids);
 
     List<SysUser> selectAll();
 
@@ -26,7 +30,12 @@ public interface SysUserMapper {
     //使用SelectKey返回主键自增的值
     int insert3(SysUser user);
 
+    //用foreach实现批量插入
+    int insertUsers( List<SysUser> users);
+
     int updateById(SysUser user);
+
+    int updateByMap(@Param("map") Map<String, Object> map, @Param("id") Long id);
 
     int updateByIdSelective(SysUser user);
 
