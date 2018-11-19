@@ -2,6 +2,7 @@ package com.rui.model.mapper;
 
 import com.rui.model.pojo.SysRole;
 import com.rui.model.pojo.SysUser;
+import org.apache.ibatis.annotations.CacheNamespaceRef;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

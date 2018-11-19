@@ -340,4 +340,42 @@ public class SysUserTest extends BaseMapperTest {
         }
     }
 
+    @Test
+    public void testDirtyDate() {
+        SqlSession sqlSession = getSqlSession();
+        try {
+            SysUserMapper sysUserMapper = sqlSession.getMapper(SysUserMapper.class);
+            List<SysRole> role1 = sysUserMapper.selectRolesByUserId(1L);
+            for (SysRole role :
+                    role1) {
+                System.out.println(role);
+            }
+        } finally {
+            sqlSession.close();
+        }
+
+        SqlSession sqlSession1 = getSqlSession();
+        try {
+            SysRoleMapper sysRoleMapper = sqlSession1.getMapper(SysRoleMapper.class);
+            SysRole sysRole = sysRoleMapper.selectById(1L);
+            sysRole.setRoleName("管理员");
+            sysRoleMapper.update(sysRole);
+            sqlSession1.commit();
+        } finally {
+            sqlSession1.close();
+        }
+
+        SqlSession sqlSession2 = getSqlSession();
+        try {
+            SysUserMapper sysUserMapper = sqlSession2.getMapper(SysUserMapper.class);
+            List<SysRole> role1 = sysUserMapper.selectRolesByUserId(1L);
+            for (SysRole role :
+                    role1) {
+                System.out.println(role);
+            }
+        } finally {
+            sqlSession2.close();
+        }
+    }
+
 }

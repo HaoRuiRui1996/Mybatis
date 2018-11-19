@@ -1,9 +1,11 @@
 package com.rui.model.pojo;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
 
-public class SysUser {
+public class SysUser implements Serializable {
+    private static final long serialVersionUID = 4655956169215121364L;
     private Long id;
 
     private String userName;
