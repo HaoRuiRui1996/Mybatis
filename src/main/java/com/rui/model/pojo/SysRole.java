@@ -1,8 +1,12 @@
 package com.rui.model.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class SysRole {
+public class SysRole implements Serializable {
+
+    private static final long serialVersionUID = -2823528881845717328L;
+
     private Long id;
 
     private String roleName;

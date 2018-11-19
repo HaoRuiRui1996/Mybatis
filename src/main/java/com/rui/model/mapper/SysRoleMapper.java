@@ -6,6 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 
 import java.util.List;
 
+@CacheNamespaceRef(SysRoleMapper.class)
 public interface SysRoleMapper {
 
     @Results(id = "roleResultMap",

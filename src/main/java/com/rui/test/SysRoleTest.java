@@ -21,7 +21,19 @@ public class SysRoleTest extends BaseMapperTest{
         try {
             SysRoleMapper sysRoleMapper = sqlSession.getMapper(SysRoleMapper.class);
             SysRole role = sysRoleMapper.selectById(1L);
-            System.out.println(role);
+            System.out.println("0:" + role);
+            SysRole role1 = sysRoleMapper.selectById(1L);
+            System.out.println("1:" + role1);
+        } finally {
+            sqlSession.close();
+        }
+        sqlSession = getSqlSession();
+        try {
+            SysRoleMapper sysRoleMapper = sqlSession.getMapper(SysRoleMapper.class);
+            SysRole role = sysRoleMapper.selectById(1L);
+            System.out.println("0:" + role);
+            SysRole role1 = sysRoleMapper.selectById(1L);
+            System.out.println("1:" + role1);
         } finally {
             sqlSession.close();
         }
