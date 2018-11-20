@@ -3,6 +3,7 @@ package com.rui.model.pojo;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 public class SysUser implements Serializable {
     private static final long serialVersionUID = 4655956169215121364L;
@@ -19,6 +20,18 @@ public class SysUser implements Serializable {
     private String userInfo;
 
     private byte[] headImg;
+
+    public List<SysRole> getRoleList() {
+        return roleList;
+    }
+
+    public void setRoleList(List<SysRole> roleList) {
+        this.roleList = roleList;
+    }
+
+    private List<SysRole> roleList;
+
+
 
     public String getUserInfo() {
         return userInfo;
@@ -86,6 +99,7 @@ public class SysUser implements Serializable {
                 ", createTime=" + createTime +
                 ", userInfo='" + userInfo + '\'' +
                 ", headImg=" + Arrays.toString(headImg) +
+                ", roleList=" + roleList +
                 '}';
     }
 }

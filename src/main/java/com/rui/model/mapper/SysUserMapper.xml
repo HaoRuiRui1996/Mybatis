@@ -12,12 +12,42 @@
         <result column="head_img" property="headImg" jdbcType="BLOB"/>
     </resultMap>
 
+    <resultMap id="UserRoleMap" type="com.rui.model.pojo.SysUser" extends="BaseResultMap">
+        <collection property="roleList" columnPrefix="role_" ofType="com.rui.model.pojo.SysRole">
+            <id column="id" property="id" />
+            <result column="role_name" property="roleName" />
+            <result column="enabled" property="enabled" />
+            <result column="create_by" property="createBy" />
+            <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        </collection>
+    </resultMap>
+
     <select id="selectById" resultMap="BaseResultMap">
     select * from sys_user where id = #{id}
   </select>
 
     <select id="selectAll" resultType="com.rui.model.pojo.SysUser">
     select * from sys_user
+    </select>
+
+    <select id="selectRolesByUserId2" resultMap="UserRoleMap">
+      select
+        u.id,
+        u.user_name,
+        u.user_password,
+        u.user_email,
+        u.user_info,
+        u.head_img,
+        u.create_time,
+        r.id role_id,
+        r.role_name role_role_name,
+        r.enabled role_enabled,
+        r.create_by role_create_by,
+        r.create_time role_create_time
+      from sys_user u
+        inner join sys_user_role ur on ur.user_id = u.id
+        inner join sys_role r on ur.role_id = r.id
+        where u.id = #{id}
   </select>
 
     <select id="selectRolesByUserId" resultType="com.rui.model.pojo.SysRole">
